@@ -4,7 +4,6 @@
 MSPGCC_ROOT_DIR = /Users/jonas/dev/tools/msp430-gcc-9.3.1.11_macos
 MSPGCC_BIN_DIR = $(MSPGCC_ROOT_DIR)/bin
 MSPGCC_INCLUDE_DIR = $(MSPGCC_ROOT_DIR)/include
-INCLUDE_DIRS = $(MSPGCC_INCLUDE_DIR)
 LIB_DIRS = $(MSPGCC_INCLUDE_DIR)
 BUILD_DIR = build
 OBJ_DIR = $(BUILD_DIR)/obj
@@ -12,6 +11,11 @@ BIN_DIR = $(BUILD_DIR)/bin
 TI_CCS_DIR = /Applications/ti/ccs2031/ccs
 DEBUG_BIN_DIR = $(TI_CCS_DIR)/ccs_base/DebugServer/bin
 DEBUG_DRIVERS_DIR = $(TI_CCS_DIR)/ccs_base/DebugServer/drivers
+
+INCLUDE_DIRS = $(MSPGCC_INCLUDE_DIR) \
+			   ./src \
+			   ./external/ \
+			   ./
 
 
 # Toolchain
@@ -23,7 +27,8 @@ DEBUG = LD_LIBRARY_PATH=$(DEBUG_DRIVERS_DIR) $(DEBUG_BIN_DIR)/mspdebug
 TARGET = $(BIN_DIR)/blink
 
 SOURCES = src/main.c \
-		  src/led.c
+		  src/led.c \
+		  src/drivers/io.c \
 
 OBJECT_NAMES = $(SOURCES:.c=.o)
 OBJECTS = $(patsubst %,$(OBJ_DIR)/%,$(OBJECT_NAMES))
